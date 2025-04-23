@@ -7,7 +7,6 @@
 ## Development Environment
 - Operating System: Ubuntu 22.04 on WSL (Windows Subsystem for Linux)
 - Tools:
-  - GHC (Haskell Compiler)
   - Lambda Shell (lambdabot or custom shell)
 
 ## How to Run
