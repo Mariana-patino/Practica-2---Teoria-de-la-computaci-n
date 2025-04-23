@@ -1,0 +1,112 @@
+# LAMBDA CALCULUS IMPLEMENTATION: BARENDRECHT'S NUMERALS
+# ------------------------------------------------------
+
+## 1. PURPOSE
+This documentation explains the implementation of Barendregt's numerals in lambda calculus using Lambda Shell, demonstrating:
+- Representation of natural numbers
+- Basic arithmetic operations (successor, predecessor, zero test)
+- Boolean logic and pair operations
+
+## 2. CORE DEFINITIONS
+
+### 2.1 Boolean Primitives
+true = λx.λy.x  // Selects first argument
+false = λx.λy.y // Selects second argument
+
+Examples:
+true M N  → M
+false M N → N
+
+### 2.2 Pair Operations
+pair = λm.λn.λz.z m n  // Constructs pair [M,N]
+fst = λp.p true        // Extracts first element
+snd = λp.p false       // Extracts second element
+
+Properties:
+fst [M,N] ≡ M
+snd [M,N] ≡ N
+
+## 3. NUMERAL SYSTEM
+
+### 3.1 Base Definitions
+I = λx.x          // Identity function
+zero = I          // Represents 0
+succ = λx.pair false x // Successor function
+
+### 3.2 Numeral Representation
+0 = zero = I
+1 = succ zero = [false, zero]
+2 = succ 1 = [false, [false, zero]]
+...
+
+## 4. ARITHMETIC OPERATIONS
+
+### 4.1 Predecessor
+pred = λx.x false
+
+Behavior:
+pred 0 → false (undefined)
+pred (n+1) → n
+
+### 4.2 Zero Test
+iszero = λx.x true
+
+Behavior:
+iszero 0 → true
+iszero (n+1) → false
+
+## 5. IMPLEMENTATION NOTES
+
+### 5.1 Initial Setup
+All definitions must be loaded in Lambda Shell in this order:
+1. Boolean primitives
+2. Pair operations
+3. Numeral system
+4. Arithmetic operations
+
+### 5.2 Key Observations
+- Numerals are nested pairs with 'false' as the first element
+- pred 0 returns false (by design)
+- iszero checks for the identity function (zero case)
+
+## 6. EXAMPLE EXECUTIONS
+
+> succ zero
+[false, zero]  // numeral 1
+
+> pred (succ zero)
+zero           // numeral 0
+
+> iszero zero
+true           // λx.λy.x
+
+> iszero (succ zero)
+false          // λx.λy.y
+
+## 7. DESIGN RATIONALE
+
+### 7.1 Numeral Choice
+Barendregt's encoding was selected because:
+- Provides elegant arithmetic operations
+- Maintains consistency with Church booleans
+- Enables simple pattern matching via application
+
+### 7.2 Operation Design
+- Successor: Wraps numeral in [false, n] pair
+- Predecessor: Uses false as selector
+- Zero test: Uses true as selector
+
+## 8. LIMITATIONS
+- pred 0 returns false instead of error
+- Large numerals become difficult to read
+- No built-in Church numeral conversion
+
+## 9. USAGE INSTRUCTIONS
+1. Load all definitions sequentially
+2. Test with simple numerals first
+3. Verify behavior matches theoretical expectations
+
+## 10. REFERENCES
+- Barendregt, H. (1984) The Lambda Calculus
+- Lambda Shell documentation
+- Church, A. (1941) The Calculi of Lambda Conversion
