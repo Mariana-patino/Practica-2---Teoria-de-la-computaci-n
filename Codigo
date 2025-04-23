@@ -1,0 +1,38 @@
+> let true = \x.\y.x
+> let false = \x.\y.y
+> let pair = \m.\n.\z.z m n
+> let fst = \p.p true
+> let snd = \p.p false
+> let I = \x.x
+> let zero = I
+> let succ = \x.pair false x
+> let x0 = zero
+> let x1 = succ x0
+> let x2 = succ x1
+> let x3 = succ x2
+> let x4 = succ x3
+> let x5 = succ x4
+> let pred = \x.x false
+> let iszero = \x.x true
+> false (\a.a) (\b.b)
+\b. b
+> true (\x.x) (\y.y)
+\x. x
+> fst (pair (\s.s) (\t.t))
+\s. s
+> snd (pair (\u.u) (\v.v))
+\v. v
+> pair (\m.m) (\n.n) true
+\m. m
+> pair (\p.p) (\q.q) false
+\q. q
+> succ x0
+\z. z (\x y. y) x0
+> pred x0
+false
+> pred (succ x0)
+x0
+> iszero x0
+true
+> iszero (succ x0)
+false
