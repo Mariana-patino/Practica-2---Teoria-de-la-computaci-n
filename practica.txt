@@ -1,0 +1,103 @@
+===============================================
+         DOCUMENTACIÓN: BARENDRECHT'S NUMERALS
+===============================================
+
+1. INTRODUCCIÓN
+---------------
+Implementación de los numerals de Barendrecht en Lambda Shell, 
+mostrando:
+- Representación de números naturales
+- Operaciones básicas (sucesor, predecesor, test de cero)
+- Booleanos y pares lambda
+
+2. DEFINICIONES BÁSICAS
+----------------------
+
+2.1 Booleanos:
+true  = λx.λy.x  // Selecciona primer argumento
+false = λx.λy.y  // Selecciona segundo argumento
+
+Ejemplos:
+true M N  --> M
+false M N --> N
+
+2.2 Pares y proyecciones:
+pair = λm.λn.λz.z m n  // Construye par [M,N]
+fst  = λp.p true       // Primer elemento
+snd  = λp.p false      // Segundo elemento
+
+Ejemplos:
+fst [M,N] --> M
+snd [M,N] --> N
+
+3. NUMERALES BARENDRECHT
+-----------------------
+
+3.1 Definiciones:
+zero = I = λx.x        // Representa 0
+succ = λx.[false,x]    // Función sucesor
+
+3.2 Representación numérica:
+0 = zero = I
+1 = succ zero = [false, zero]
+2 = succ 1 = [false, [false, zero]]
+...
+
+4. OPERACIONES ARITMÉTICAS
+-------------------------
+
+4.1 Predecesor:
+pred = λx.x false
+
+Comportamiento:
+pred 0 --> false (no definido)
+pred (n+1) --> n
+
+4.2 Test de cero:
+iszero = λx.x true
+
+Comportamiento:
+iszero 0 --> true
+iszero n --> false (para n>0)
+
+5. EJEMPLOS COMPLETOS
+--------------------
+
+5.1 Configuración inicial:
+let true = \x.\y.x;
+let false = \x.\y.y;
+let pair = \m.\n.\z.z m n;
+let fst = \p.p true;
+let snd = \p.p false;
+let I = \x.x;
+let zero = I;
+let succ = \x.pair false x;
+let pred = \x.x false;
+let iszero = \x.x true;
+
+5.2 Ejecuciones:
+> succ zero
+[false, zero]  // 1
+
+> pred (succ zero)
+zero           // 0
+
+> iszero zero
+true
+
+> iszero (succ zero)
+false
+
+6. OBSERVACIONES
+---------------
+- pred 0 devuelve false (consistente con definición)
+- Los numerals son listas anidadas con false
+- iszero verifica si el término es zero (I)
+
+7. INSTRUCCIONES
+----------------
+1. Copiar definiciones en Lambda Shell
+2. Ejecutar ejemplos en orden
+3. Verificar resultados esperados
+
+===============================================
