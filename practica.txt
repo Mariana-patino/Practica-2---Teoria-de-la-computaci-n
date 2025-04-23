@@ -104,7 +104,7 @@ Barendregt's encoding was selected because:
 ## 9. USAGE INSTRUCTIONS
 1. Load all definitions sequentially
 2. Test with simple numerals first
-3. Verify behavior matches theoretical expectations
+
 
 ## 10. REFERENCES
 - Barendregt, H. (1984) The Lambda Calculus
